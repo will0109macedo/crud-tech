@@ -10,15 +10,15 @@ import {
   deleteDoc 
 } from "firebase/firestore";
 
-function App() {
+function App(id) {
   const [newName, setNewName] = useState("")
   const [newAge, setNewAge] = useState(0)
 
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users")
   
-  const createUser = async () => {
-    await addDoc(usersCollectionRef, {name: newName, age: Number(newAge) });
+  const createUser = async (key={id}) => {
+    await addDoc(usersCollectionRef, {name: newName, age: Number(newAge)});
   };
 
   const updateUser = async (id, age) => {
@@ -39,7 +39,7 @@ function App() {
     };
 
     getUsers()
-  }, []);
+  }, [usersCollectionRef]);
 
   return (<div className="App">
   <input 
@@ -54,7 +54,7 @@ function App() {
     setNewAge(event.target.value);
   }}/>
   
-  <button onClick={createUser}> Create Use</button> 
+  <button onClick={createUser}> Create User</button> 
   {users.map((user) => {  
     return <div>
     {" "}
